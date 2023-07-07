@@ -24,13 +24,11 @@ export default function MainLayout({ children }: IProps) {
 
   useEffect(() => {
     const connectAccount = async () => {
-      window.ethereum.request({
-        method: "eth_accounts",
-      });
       const provider = new ethers.providers.Web3Provider(
         window.ethereum,
         undefined
       );
+      await provider.send("eth_requestAccounts", []);
       const signerAccount = provider.getSigner();
       if (signerAccount) {
         let tempWallet = { address: "", bnb: 0 };

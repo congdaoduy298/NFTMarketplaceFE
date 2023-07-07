@@ -73,7 +73,7 @@ export default class NFTContract extends Erc721 {
 
     mintNFT = async (address: string) => {
         const heroType = 1;
-        const tx: TransactionResponse = await this._contract.mint(address, heroType);
+        const tx: TransactionResponse = await this._contract.mint(address, heroType, this._option);
         return this._handleTransactionResponse(tx);
     }
 }

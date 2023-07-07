@@ -195,7 +195,7 @@ export default function MarketView() {
     if (!auctionId) return;
     setIsFinish.on();
     try {
-      const rawResponse = await fetch("http://localhost:3001/finish-auction", {
+      const rawResponse = await fetch("https://backend.blockchaindev.space/finish-auction", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -423,7 +423,7 @@ export default function MarketView() {
     if (!web3Provider || !address) return;
 
     // Get Minter Role
-    const rawResponse = await fetch("http://localhost:3001/grant-role", {
+    const rawResponse = await fetch("https://backend.blockchaindev.space/grant-role", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -460,15 +460,22 @@ export default function MarketView() {
   };
 
   const postRequest = async (endpoint: string, address: string) => {
-    const rawResponse = await fetch(`http://localhost:3001/${endpoint}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ address: address }),
-    });
-    const response = await rawResponse.text();
+    let response = "";
+    try {
+      const rawResponse = await fetch(`https://backend.blockchaindev.space/${endpoint}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ address: address }),
+      });
+      response = await rawResponse.text();
+    }
+    catch (err: any) {
+      console.log(err.message);
+      response = err.reason;
+    }
     return response;
   };
 
