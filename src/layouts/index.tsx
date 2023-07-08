@@ -6,7 +6,7 @@ import {
   setWeb3Provider,
 } from "@/reduxs/accounts/account.slices";
 import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
-import { Flex, Heading, Spacer, Text, useBoolean } from "@chakra-ui/react";
+import { Flex, Heading, Spacer, Text, useBoolean, useToast } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import Link from "next/link";
 import React, { useEffect, ReactNode, useState, createContext } from "react";
@@ -20,15 +20,18 @@ export default function MainLayout({ children }: IProps) {
   const { wallet } = useAppSelector((state) => state.account);
   const [account, setAccount] = useState("");
   const [balance, setBalance] = useState("0");
+  const toast = useToast();
   let isConnected = false;
-
+  
   useEffect(() => {
     const connectAccount = async () => {
-      const provider = new ethers.providers.Web3Provider(
-        window.ethereum,
-        undefined
-      );
-      await provider.send("eth_requestAccounts", []);
+      let provider;
+      if (window.ethereum) {
+        provider = new ethers.providers.Web3Provider(
+          window.ethereum,
+          undefined
+        );
+      } else return;
       const signerAccount = provider.getSigner();
       if (signerAccount) {
         let tempWallet = { address: "", bnb: 0 };
@@ -84,6 +87,15 @@ export default function MainLayout({ children }: IProps) {
 
       dispatch(setWalletInfo({ address, bnb: bnbBalance }));
       dispatch(setWeb3Provider(provider));
+    } else {
+      toast({
+        title: "Metamask is required!",
+        description: "Please install Metamask.",
+        status: "warning",
+        duration: 9000,
+        position: "top",
+        isClosable: true,
+      });
     }
   };
 

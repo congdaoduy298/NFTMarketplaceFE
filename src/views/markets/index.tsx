@@ -22,6 +22,9 @@ import {
   useDisclosure,
   Spacer,
   useToast,
+  Link,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Nft from "./components/Nft";
@@ -37,6 +40,9 @@ import NFTAuction from "../auctions/components/NFTAuction";
 import AuctionContractJsonRPC from "@/contracts/AuctionContractJsonRPC";
 
 export default function MarketView() {
+  useEffect(() => {
+    document.title="NFT Marketplace";
+  }, [])
   const { web3Provider, wallet } = useAppSelector(
     (state: any) => state.account
   );
@@ -650,32 +656,40 @@ export default function MarketView() {
           </TabPanel>
 
           <TabPanel>
+            <Text mt="20px" fontSize="16px" fontWeight="bold">
+              IMPORTANT: Add BSC Testnet ino the Metamask. RPC URL should be https://data-seed-prebsc-1-s1.binance.org:8545/ 
+              <Spacer />
+              You can follow these instructions: 
+            </Text>
+            <Spacer />
+            <UnorderedList>
+              <ListItem><Link textDecoration={"underline"} href="https://gdtk.gitbook.io/docs/metamask/them-mang/bsc-testnet" mt="20px" fontSize="16px" fontWeight="bold">
+                Vietnamese Docs
+              </Link></ListItem>
+              <Spacer />
+              <ListItem><Link textDecoration={"underline"} href="https://whitepaper.galaxywar.io/game-guide/openbeta-test/how-to-add-bsc-testnet-into-the-metamask" mt="20px" fontSize="16px" fontWeight="bold">
+                English Docs
+              </Link></ListItem>
+            </UnorderedList>
+            <Spacer />
             <Text mt="20px" fontSize="16px">
               On the right side, you can faucet some BNB for transaction fees,
               FLP for NFT prices, and a custom USDT for buying ICOs.
-            </Text>
-            <Spacer />
-            <Text mt="20px" fontSize="16px">
+              <Spacer />
               You can also mint your own NFT to test these features: LIST,
               UNLIST, EDIT PRICE, TRANSFER, and AUCTION.
             </Text>
             <Spacer />
             <Text mt="20px" fontSize="16px">
               FLP Contract: 0xF52254b56ad7482A1721fc9B4B3e7F1ba793E0a9
-            </Text>
-            <Spacer />
-            <Text mt="20px" fontSize="16px">
+              <Spacer />
               USDT Contract: 0x039E52Ed19D21EfEaD66d0F4a668140bbDAdEf4d
-            </Text>
-            <Spacer />
-            <Text mt="20px" fontSize="16px">
+              <Spacer />
               NFT Contract: 0x22f76B1a6fF9a126CB28C4111c78FbE09D83fD20
-            </Text>
-            <Spacer />
-            <Text mt="20px" fontSize="16px" fontWeight="bold">
-              NOTE: Remember add RPC Bsc Testnet from Bsc official website.
-              Recommend using this RPC when testing on Metamask:
-              https://data-seed-prebsc-1-s1.binance.org:8545/
+              <Spacer />
+              Market Contract: 0x9F82d8e0Cbadf3cFBB9009D1526742B6511A1849
+              <Spacer />
+              Auction Contract: 0x803C270AbEFfc7c2321EF37BB9d1A0424FD29DC6
             </Text>
           </TabPanel>
         </TabPanels>

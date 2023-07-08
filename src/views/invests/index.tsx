@@ -1,5 +1,5 @@
 declare var window: any;
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Flex,
   Heading,
@@ -19,6 +19,9 @@ import UsdtContract from "@/src/contracts/USDTContract";
 import { useAppSelector } from "@/reduxs/hooks";
 
 export default function InvestView() {
+  useEffect(() => {
+    document.title="Invest";
+  }, [])
   const { web3Provider, wallet } = useAppSelector(
     (state: any) => state.account
   );
